@@ -3,6 +3,7 @@ package main;
 import java.awt.Graphics;
 
 import entities.Player;
+import levels.LevelManager;
 
 public class Game implements Runnable {
 	private GameWindow gameWindow;
@@ -13,14 +14,15 @@ public class Game implements Runnable {
 	private boolean isGaming = true;
 
 	public final static int TILES_DEFAULT_SIZE = 32;
-	public final static float SCALE = 1.5f;
-	public final static int TILES_WIDTH = 26;
-	public final static int TILES_HEIGTH = 14;
+	public final static float SCALE = 3f;
+	public final static int TILES_WIDTH = 13;
+	public final static int TILES_HEIGTH = 6;
 	public final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
 	public final static int GAME_WIDTH = TILES_SIZE * TILES_WIDTH;
 	public final static int GAME_HEIGTH = TILES_SIZE * TILES_HEIGTH;
 
 	private Player player;
+	private LevelManager levelManager;
 
 	public Game() {
 		initClasses();
@@ -33,8 +35,8 @@ public class Game implements Runnable {
 	}
 
 	private void initClasses() {
-		player = new Player(200, 200);
-
+		levelManager = new LevelManager(this);
+		player = new Player(200, 200, (int) (40 * SCALE), (int) (40 * SCALE));
 	}
 
 	private void startGameLoop() {
@@ -44,9 +46,11 @@ public class Game implements Runnable {
 
 	public void update() {
 		player.update();
+		levelManager.update();
 	}
 
 	public void render(Graphics g) {
+		levelManager.render(g);
 		player.render(g);
 	}
 
@@ -95,9 +99,9 @@ public class Game implements Runnable {
 
 	}
 
-  public void windowsFocusLost() {
+	public void windowsFocusLost() {
 		player.resetDirection();
-  }
+	}
 
 	public Player getPlayer() {
 		return player;

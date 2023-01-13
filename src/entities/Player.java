@@ -17,13 +17,9 @@ public class Player extends Entity {
 	private boolean moving = false;
 	private boolean left, up, right, down;
 	private float playerSpeed = 2.0f;
-	// public static final String[] PATH_WARRIOR_LIST = {
-	// 		"res/Warrior_animations/Front/PNG Sequences/Warrior_clothes_1/",
-	// 		"res/Warrior_animations/Left_Side/PNG Sequences/Warrior_clothes_1/",
-	// 		"res/Warrior_animations/Right_Side/PNG Sequences/Warrior_clothes_1/" };
 
-	public Player(float x, float y) {
-		super(x, y);
+	public Player(float x, float y, int width, int height) {
+		super(x, y, width, height);
 		loadAnimations();
 	}
 
@@ -34,7 +30,7 @@ public class Player extends Entity {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, 150, 150, null);
+		g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, width, height, null);
 	}
 
 	private void updateAnimationTick() {

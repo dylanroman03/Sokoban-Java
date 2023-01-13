@@ -19,4 +19,8 @@ public class Constants {
 			"res/Warrior_animations/Left_Side/PNG Sequences/Warrior_clothes_1/",
 			"res/Warrior_animations/Right_Side/PNG Sequences/Warrior_clothes_1/" };
 
+	public static final String PATH_BACKGROUND_LEVELS = "res/Background/marco.png";
+	public static final String PATH_FLOOR_LEVELS = "res/floor.png";
+	public static final String PATH_FILE_LEVELS = "levels/nivel";
+
 }

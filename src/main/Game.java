@@ -3,6 +3,7 @@ package main;
 import java.awt.Graphics;
 
 import entities.Player;
+import levels.BoxManager;
 import levels.LevelManager;
 
 public class Game implements Runnable {
@@ -13,16 +14,18 @@ public class Game implements Runnable {
 	private final int UPS_SET = 200;
 	private boolean isGaming = true;
 
-	public final static int TILES_DEFAULT_SIZE = 32;
+	public final static int TILES_DEFAULT_SIZE = 17;
 	public final static float SCALE = 3f;
-	public final static int TILES_WIDTH = 13;
-	public final static int TILES_HEIGTH = 6;
+	public final static int TILES_WIDTH = 15;
+	public final static int TILES_HEIGTH = 15;
 	public final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
 	public final static int GAME_WIDTH = TILES_SIZE * TILES_WIDTH;
 	public final static int GAME_HEIGTH = TILES_SIZE * TILES_HEIGTH;
+	public final static boolean DEBUG = true;
 
 	private Player player;
 	private LevelManager levelManager;
+  private BoxManager boxManager;
 
 	public Game() {
 		initClasses();
@@ -36,7 +39,21 @@ public class Game implements Runnable {
 
 	private void initClasses() {
 		levelManager = new LevelManager(this);
-		player = new Player(200, 200, (int) (40 * SCALE), (int) (40 * SCALE));
+		int[][] matrix = levelManager.getLvlData();
+		int xInit = 0;
+		int yInit = 0;
+
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				if (matrix[i][j] == 5) {
+					xInit = (Game.TILES_SIZE * j);
+					yInit = (Game.TILES_SIZE * i);
+				}
+			}
+		}
+
+		player = new Player(xInit, yInit, TILES_SIZE + 30, TILES_SIZE + 30);
+		player.setLvlDate(matrix);
 	}
 
 	private void startGameLoop() {
@@ -45,12 +62,14 @@ public class Game implements Runnable {
 	}
 
 	public void update() {
-		player.update();
 		levelManager.update();
+		player.update();
 	}
 
 	public void render(Graphics g) {
 		levelManager.render(g);
+    boxManager = new BoxManager(levelManager.getLvlData());
+    boxManager.render(g);
 		player.render(g);
 	}
 

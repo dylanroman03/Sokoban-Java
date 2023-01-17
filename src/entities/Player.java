@@ -1,36 +1,49 @@
 package entities;
 
 import static utilities.Constants.PATH_WARRIOR_LIST;
-import static utilities.Constants.PlayerConstants.IDLE;
+import static utilities.Constants.PlayerConstants.IDLE_DOWN;
+import static utilities.Constants.PlayerConstants.IDLE_UP;
 import static utilities.Constants.PlayerConstants.RUNNING_LEFT;
 import static utilities.Constants.PlayerConstants.RUNNING_RIGHT;
+import static utilities.Helpers.canMove;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import main.Game;
 import utilities.LoadSave;
 
 public class Player extends Entity {
 	private BufferedImage[][] animations;
 	private int aniTick, aniIndex, aniSpeed = 10;
-	private int playerAction = IDLE;
+	private int playerAction = IDLE_UP;
 	private boolean moving = false;
 	private boolean left, up, right, down;
-	private float playerSpeed = 2.0f;
+	private float playerSpeed = 1.5f;
+	private int[][] lvlDate;
+	private float xDrawOffset = 26;
+	private float yDrawOffset = 18;
 
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		loadAnimations();
+		initHitBox(x, y, Game.TILES_SIZE - (Game.SCALE * 5f), Game.TILES_SIZE - (Game.SCALE * 1.5f));
 	}
 
 	public void update() {
-		updatePos();
+		updatePosition();
+		// updateHitBox();
 		updateAnimationTick();
 		setAnimation();
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, width, height, null);
+		g.drawImage(animations[playerAction][aniIndex], (int) (hitBox.x - xDrawOffset), (int) (hitBox.y - yDrawOffset),
+				width, height, null);
+
+		if (Game.DEBUG) {
+			showHitBox(g);
+		}
 	}
 
 	private void updateAnimationTick() {
@@ -57,11 +70,14 @@ public class Player extends Entity {
 				playerAction = RUNNING_LEFT;
 			else if (right)
 				playerAction = RUNNING_RIGHT;
-			else
-        playerAction = IDLE;
-			
+			else if (down) {
+				playerAction = IDLE_DOWN;
+			} else {
+				playerAction = IDLE_UP;
+			}
+
 		} else {
-			playerAction = IDLE;
+			playerAction = IDLE_UP;
 		}
 
 		if (startAni != playerAction)
@@ -73,28 +89,41 @@ public class Player extends Entity {
 		aniIndex = 0;
 	}
 
-	private void updatePos() {
+	private void updatePosition() {
 		moving = false;
 
+		if (!left && !right && !up && !down)
+			return;
+
+		float xSpeed = 0, ySpeed = 0;
+
 		if (left && !right) {
-			x -= playerSpeed;
+			xSpeed = -playerSpeed;
 			moving = true;
 		} else if (right && !left) {
-			x += playerSpeed;
+			xSpeed = playerSpeed;
 			moving = true;
 		}
 
 		if (up && !down) {
-			y -= playerSpeed;
+			ySpeed = -playerSpeed;
 			moving = true;
 		} else if (down && !up) {
-			y += playerSpeed;
+			ySpeed = playerSpeed;
 			moving = true;
+		}
+
+		// boolean canMove = canMove(x + xSpeed, y + ySpeed, width, height, lvlDate,
+		// playerAction);
+		boolean canMove = canMove(hitBox.x + xSpeed, hitBox.y + ySpeed, hitBox.width, hitBox.height, lvlDate, playerAction);
+		if (canMove) {
+			hitBox.x += xSpeed;
+			hitBox.y += ySpeed;
 		}
 	}
 
 	private void loadAnimations() {
-		animations = new BufferedImage[3][14];
+		animations = new BufferedImage[4][14];
 
 		for (int j = 0; j < animations.length; j++) {
 			for (int i = 0; i < animations[j].length; i++) {
@@ -110,7 +139,6 @@ public class Player extends Entity {
 			}
 		}
 	}
-
 
 	public boolean isLeft() {
 		return left;
@@ -148,12 +176,15 @@ public class Player extends Entity {
 		this.down = down;
 	}
 
-  public void resetDirection() {
+	public void resetDirection() {
 		left = false;
 		right = false;
 		down = false;
 		up = false;
 		moving = false;
-  }
+	}
 
+	public void setLvlDate(int[][] lvlDate) {
+		this.lvlDate = lvlDate;
+	}
 }

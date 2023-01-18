@@ -30,7 +30,7 @@ public class LoadSave {
     return img;
   }
 
-  static public Box[] getBoxes(int[][] lvlDate) {
+  static public Box[] getInitBoxes(int[][] lvlDate) {
     Box[] boxes = null;
     int length = 0;
     int e = 0;

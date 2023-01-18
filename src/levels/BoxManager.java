@@ -1,9 +1,10 @@
 package levels;
 
 import static utilities.Constants.PATH_BOX_LEVELS;
-import static utilities.LoadSave.getBoxes;
+import static utilities.LoadSave.getInitBoxes;
 
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import entities.Box;
@@ -20,7 +21,7 @@ public class BoxManager {
   }
 
   private void addBoxes() {
-    boxes = getBoxes(lvlData);
+    boxes = getInitBoxes(lvlData);
   }
 
   public void render(Graphics g) {
@@ -28,8 +29,34 @@ public class BoxManager {
 
     for (Box box : boxes) {
       box.render(levelBox, g);
-      // g.drawImage(levelBox, (int) box.getHitBox().x, (int) box.getHitBox().y, Game.TILES_SIZE, Game.TILES_SIZE, null);
     }
 
   }
+
+  public Box isBox(Rectangle2D hitboxPlayer) {
+    for (Box box : boxes) {
+      Rectangle2D hitBox = box.getHitBox();
+      boolean intersects = hitboxPlayer.intersects(hitBox);
+
+      if (intersects) return box;
+    }
+
+    return null;
+  }
+
+  // public void moveBox(int x, int y, int playerAction) {
+  //   for (Box box : boxes) {
+  //     int xIndex = (int) (box.getHitBox().x / Game.TILES_SIZE);
+  //     int yIndex = (int) (box.getHitBox().y / Game.TILES_SIZE);
+
+  //     if (xIndex == x && yIndex == y) {
+  //       box.move(playerAction);
+  //     }
+  //   }
+  // }
+
+  public Box[] getBoxes() {
+    return boxes;
+  }
+
 }

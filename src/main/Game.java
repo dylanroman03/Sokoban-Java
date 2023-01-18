@@ -52,8 +52,10 @@ public class Game implements Runnable {
 			}
 		}
 
+    boxManager = new BoxManager(matrix);
 		player = new Player(xInit, yInit, TILES_SIZE + 30, TILES_SIZE + 30);
-		player.setLvlDate(matrix);
+		player.setLvlData(matrix);
+		player.setBoxManager(boxManager);
 	}
 
 	private void startGameLoop() {
@@ -68,7 +70,6 @@ public class Game implements Runnable {
 
 	public void render(Graphics g) {
 		levelManager.render(g);
-    boxManager = new BoxManager(levelManager.getLvlData());
     boxManager.render(g);
 		player.render(g);
 	}

@@ -10,6 +10,7 @@ import static utilities.Helpers.canMove;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import levels.BoxManager;
 import main.Game;
 import utilities.LoadSave;
 
@@ -19,8 +20,15 @@ public class Player extends Entity {
 	private int playerAction = IDLE_UP;
 	private boolean moving = false;
 	private boolean left, up, right, down;
-	private float playerSpeed = 1.5f;
-	private int[][] lvlDate;
+	private float playerSpeed = 1f;
+
+	public int[][] lvlData;
+	public BoxManager boxManager;
+
+	public void setBoxManager(BoxManager boxManager) {
+		this.boxManager = boxManager;
+	}
+
 	private float xDrawOffset = 26;
 	private float yDrawOffset = 18;
 
@@ -32,7 +40,6 @@ public class Player extends Entity {
 
 	public void update() {
 		updatePosition();
-		// updateHitBox();
 		updateAnimationTick();
 		setAnimation();
 	}
@@ -113,9 +120,7 @@ public class Player extends Entity {
 			moving = true;
 		}
 
-		// boolean canMove = canMove(x + xSpeed, y + ySpeed, width, height, lvlDate,
-		// playerAction);
-		boolean canMove = canMove(hitBox.x + xSpeed, hitBox.y + ySpeed, hitBox.width, hitBox.height, lvlDate, playerAction);
+		boolean canMove = canMove(this, hitBox.x + xSpeed, hitBox.y + ySpeed);
 		if (canMove) {
 			hitBox.x += xSpeed;
 			hitBox.y += ySpeed;
@@ -184,7 +189,15 @@ public class Player extends Entity {
 		moving = false;
 	}
 
-	public void setLvlDate(int[][] lvlDate) {
-		this.lvlDate = lvlDate;
+	public void setLvlData(int[][] lvlDate) {
+		this.lvlData = lvlDate;
+	}
+
+	public BoxManager getBoxManager() {
+		return boxManager;
+	}
+
+	public int getPlayerAction() {
+		return playerAction;
 	}
 }

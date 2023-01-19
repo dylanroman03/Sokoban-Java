@@ -30,10 +30,10 @@ public class Box extends Entity {
 
   public void move(int playerAction, Rectangle2D hitboxPlayer) {
     float xSpeed = 0, ySpeed = 0;
-    double yThird =  hitBox.getHeight() / 3;
-    double xThird =  hitBox.getWidth() / 3;
-    double width =  hitBox.getWidth();
-    double height =  hitBox.getHeight();
+    double yThird = hitBox.getHeight() / 3;
+    double xThird = hitBox.getWidth() / 3;
+    double width = hitBox.getWidth();
+    double height = hitBox.getHeight();
 
     boolean byLeft = hitboxPlayer.intersects(hitBox.getX(), hitBox.getY() + yThird, 1, height - yThird);
     boolean byRight = hitboxPlayer.intersects(hitBox.getX() + hitBox.width, hitBox.getY() + yThird, 1, height - yThird);
@@ -41,15 +41,14 @@ public class Box extends Entity {
     boolean byBottom = hitboxPlayer.intersects(hitBox.getX() + xThird, hitBox.getY() + height, width - xThird, 1);
     boolean byTop = hitboxPlayer.intersects(hitBox.getX() + xThird, hitBox.getY(), width - xThird, 1);
 
-    if (byRight && playerAction == RUNNING_LEFT) {
+    if (byRight && playerAction == RUNNING_LEFT)
       xSpeed = -boxSpeed;
-    } else if (byLeft && playerAction == RUNNING_RIGHT) {
+    else if (byLeft && playerAction == RUNNING_RIGHT)
       xSpeed = boxSpeed;
-    } else if (byBottom && playerAction == IDLE_UP) {
+    else if (byBottom && playerAction == IDLE_UP)
       ySpeed = -boxSpeed;
-    } else if (byTop && playerAction == IDLE_DOWN) {
+    else if (byTop && playerAction == IDLE_DOWN)
       ySpeed = boxSpeed;
-    } 
 
     hitBox.x += xSpeed;
     hitBox.y += ySpeed;

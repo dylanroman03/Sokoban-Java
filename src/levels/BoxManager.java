@@ -44,17 +44,6 @@ public class BoxManager {
     return null;
   }
 
-  // public void moveBox(int x, int y, int playerAction) {
-  //   for (Box box : boxes) {
-  //     int xIndex = (int) (box.getHitBox().x / Game.TILES_SIZE);
-  //     int yIndex = (int) (box.getHitBox().y / Game.TILES_SIZE);
-
-  //     if (xIndex == x && yIndex == y) {
-  //       box.move(playerAction);
-  //     }
-  //   }
-  // }
-
   public Box[] getBoxes() {
     return boxes;
   }

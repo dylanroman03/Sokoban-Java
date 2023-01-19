@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import entities.Player;
 import levels.BoxManager;
+import levels.BushManager;
 import levels.LevelManager;
 
 public class Game implements Runnable {
@@ -21,11 +22,12 @@ public class Game implements Runnable {
 	public final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
 	public final static int GAME_WIDTH = TILES_SIZE * TILES_WIDTH;
 	public final static int GAME_HEIGTH = TILES_SIZE * TILES_HEIGTH;
-	public final static boolean DEBUG = true;
+	public final static boolean DEBUG = false;
 
 	private Player player;
 	private LevelManager levelManager;
   private BoxManager boxManager;
+  private BushManager bushManager;
 
 	public Game() {
 		initClasses();
@@ -52,10 +54,12 @@ public class Game implements Runnable {
 			}
 		}
 
+    bushManager= new BushManager(matrix);
     boxManager = new BoxManager(matrix);
 		player = new Player(xInit, yInit, TILES_SIZE + 30, TILES_SIZE + 30);
 		player.setLvlData(matrix);
 		player.setBoxManager(boxManager);
+		player.setBushManager(bushManager);
 	}
 
 	private void startGameLoop() {
@@ -70,6 +74,7 @@ public class Game implements Runnable {
 
 	public void render(Graphics g) {
 		levelManager.render(g);
+		bushManager.render(g);
     boxManager.render(g);
 		player.render(g);
 	}

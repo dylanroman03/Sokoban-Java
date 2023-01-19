@@ -13,6 +13,7 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 
 import entities.Box;
+import entities.Bush;
 import main.Game;
 
 public class LoadSave {
@@ -47,6 +48,31 @@ public class LoadSave {
      for (int j = 0; j < lvlDate[0].length; j++) {
        if (lvlDate[i][j] == 2 || lvlDate[i][j] == 3) {
           boxes[e] = new Box((float) (Game.TILES_SIZE * j), (float) (Game.TILES_SIZE * i));
+          e++;
+       }
+     } 
+    }
+
+    return boxes;
+  }
+
+  static public Bush[] getInitBushes(int[][] lvlDate) {
+    Bush[] boxes = null;
+    int length = 0;
+    int e = 0;
+
+    for (int i = 0; i < lvlDate.length; i++) {
+      for (int j = 0; j < lvlDate[i].length; j++) {
+        if (lvlDate[i][j] == 1) length++;
+      }
+    }
+
+    boxes = new Bush[length];
+
+    for (int i = 0; i < lvlDate.length; i++) {
+     for (int j = 0; j < lvlDate[0].length; j++) {
+       if (lvlDate[i][j] == 1) {
+          boxes[e] = new Bush((float) (Game.TILES_SIZE * j), (float) (Game.TILES_SIZE * i));
           e++;
        }
      } 

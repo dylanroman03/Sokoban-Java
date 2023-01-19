@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import levels.BoxManager;
+import levels.BushManager;
 import main.Game;
 import utilities.LoadSave;
 
@@ -24,6 +25,7 @@ public class Player extends Entity {
 
 	public int[][] lvlData;
 	public BoxManager boxManager;
+	public BushManager bushManger;
 
 	public void setBoxManager(BoxManager boxManager) {
 		this.boxManager = boxManager;
@@ -200,4 +202,8 @@ public class Player extends Entity {
 	public int getPlayerAction() {
 		return playerAction;
 	}
+
+  public void setBushManager(BushManager bushManager) {
+		this.bushManger = bushManager;
+  }
 }

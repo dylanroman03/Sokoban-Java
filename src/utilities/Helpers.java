@@ -53,8 +53,9 @@ public class Helpers {
     if (box != null) {
       int playerAction = player.getPlayerAction();
 
-      boolean cantMoveBox = player.bushManger.intersectBox(box.getHitBox(), playerAction);
-      if(cantMoveBox)
+      boolean intersectBush = player.bushManger.intersectBox(box.getHitBox(), playerAction);
+      boolean intersectBox = player.boxManager.intersectBox(box, playerAction);
+      if(intersectBush || intersectBox)
         return true;
       
       box.move(playerAction, player.getHitBox());

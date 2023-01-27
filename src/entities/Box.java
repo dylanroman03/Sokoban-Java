@@ -14,10 +14,12 @@ import main.Game;
 public class Box extends Entity {
   int xInit, yInit;
   private float boxSpeed = 1f;
+  public int id;
 
-  public Box(float x, float y) {
+  public Box(float x, float y, int id) {
     super(x, y, Game.TILES_SIZE, Game.TILES_SIZE);
     initHitBox(x, y, Game.TILES_SIZE, Game.TILES_SIZE);
+    this.id = id;
   }
 
   public void render(BufferedImage levelBox, Graphics g) {

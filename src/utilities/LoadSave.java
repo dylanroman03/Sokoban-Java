@@ -47,7 +47,7 @@ public class LoadSave {
     for (int i = 0; i < lvlDate.length; i++) {
      for (int j = 0; j < lvlDate[0].length; j++) {
        if (lvlDate[i][j] == 2 || lvlDate[i][j] == 3) {
-          boxes[e] = new Box((float) (Game.TILES_SIZE * j), (float) (Game.TILES_SIZE * i));
+          boxes[e] = new Box((float) (Game.TILES_SIZE * j), (float) (Game.TILES_SIZE * i), e);
           e++;
        }
      } 

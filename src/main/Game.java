@@ -40,7 +40,7 @@ public class Game implements Runnable {
 	}
 
 	private void initClasses() {
-		levelManager = new LevelManager(this);
+		levelManager = new LevelManager();
 		int[][] matrix = levelManager.getLvlData();
 		int xInit = 0;
 		int yInit = 0;
@@ -68,8 +68,8 @@ public class Game implements Runnable {
 	}
 
 	public void update() {
-		levelManager.update();
 		player.update();
+		boxManager.update();
 	}
 
 	public void render(Graphics g) {

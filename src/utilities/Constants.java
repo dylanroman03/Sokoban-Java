@@ -26,6 +26,7 @@ public class Constants {
 	public static final String PATH_BLOCK_LEVELS = "res/Background/block.png";
 	public static final String PATH_BOX_LEVELS = "res/Background/box.png";
 	public static final String PATH_FLOOR_LEVELS = "res/floor.png";
+	public static final String PATH_GOAL_LEVELS = "res/Background/goal.png";
 	public static final String PATH_FILE_LEVELS = "levels/";
 
 }
